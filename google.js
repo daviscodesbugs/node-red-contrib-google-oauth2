@@ -119,6 +119,7 @@ module.exports = function(RED) {
             props.forEach(function(val) {
                 operation = operation[val];
             });
+            operation = operation.bind(api);
 
             operation(msg.payload, function(err, res) {
 
