@@ -18,7 +18,6 @@ module.exports = function(RED) {
             try {
                 let operation = msg.operation || config.operation || undefined;
                 let params = msg.payload;
-                // TODO handle undefined operation. set status, etc.
 
                 const method = operation.split('.')
                     .reduce((acc, curr) => acc[curr] , drive)
@@ -26,7 +25,6 @@ module.exports = function(RED) {
 
                 status.start();
                 const res = await method(params);
-                // TODO error handle
                 status.finish();
 
                 node.send(res.data);
@@ -34,7 +32,7 @@ module.exports = function(RED) {
                 node.error(err);
                 status.error(err);
             }
-            
+
             if (done) done();
         });
     }
