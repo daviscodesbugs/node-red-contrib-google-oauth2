@@ -57,7 +57,7 @@ module.exports = function(RED) {
 
     RED.httpAdmin.get(
         '/google-credentials/auth/callback',
-        function(req, resp) {
+        async function(req, resp) {
 
             if (req.query.error) {
                 return resp.send(
@@ -72,23 +72,23 @@ module.exports = function(RED) {
             const creds = RED.nodes.getCredentials(nodeID);
             const oauth2Client = creds.oauth2_client;
 
-            oauth2Client.getToken(req.query.code)
-                .then((res) => {
-                    oauth2Client.setCredentials(res.tokens);
-                    let drive = google.drive({
-                        version: 'v3',
-                        auth: oauth2Client
-                    });
+            try {
+                const { tokens } = await oauth2Client.getToken(req.query.code);
 
-                    RED.nodes.addCredentials(nodeID, {
-                        drive: drive
-                    });
-
-                    resp.send('<div>Authorized</div><script>close()</script>');
-                })
-                .catch(err => {
-                    return resp.send('Could not receive tokens\n' + err);
+                oauth2Client.setCredentials(tokens);
+                let drive = google.drive({
+                    version: 'v3',
+                    auth: oauth2Client
                 });
+
+                RED.nodes.addCredentials(nodeID, {
+                    drive: drive
+                });
+
+                resp.send('<div>Authorized</div><script>close()</script>');
+            } catch(err) {
+                resp.send('Could not receive tokens\n' + err);
+            }
 
     });
 
