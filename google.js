@@ -15,20 +15,26 @@ module.exports = function(RED) {
         node.on('input', async function(msg, send, done) {
             status.clear();
 
-            let operation = msg.operation || config.operation || undefined;
-            let params = msg.payload;
-            // TODO handle undefined operation. set status, etc.
+            try {
+                let operation = msg.operation || config.operation || undefined;
+                let params = msg.payload;
+                // TODO handle undefined operation. set status, etc.
 
-            const method = operation.split('.')
-                .reduce((acc, curr) => acc[curr] , drive)
-                .bind(drive);
+                const method = operation.split('.')
+                    .reduce((acc, curr) => acc[curr] , drive)
+                    .bind(drive);
 
-            status.start();
-            const res = await method(params);
-            // TODO error handle
-            status.finish();
+                status.start();
+                const res = await method(params);
+                // TODO error handle
+                status.finish();
 
-            node.send(res.data);
+                node.send(res.data);
+            } catch(err) {
+                node.error(err);
+                status.error(err);
+            }
+            
             if (done) done();
         });
     }
