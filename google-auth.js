@@ -15,7 +15,8 @@ module.exports = function(RED) {
                 client_id: { type:"text" },
                 client_secret: { type:"password" },
                 access_token: { type: "password" },
-                refresh_token: { type: "password" }
+                refresh_token: { type: "password" },
+                drive: { type: "password" }
             }
         }
     );
@@ -73,7 +74,16 @@ module.exports = function(RED) {
 
             oauth2Client.getToken(req.query.code)
                 .then((res) => {
-                    RED.nodes.addCredentials(nodeID, res.tokens);
+                    oauth2Client.setCredentials(res.tokens);
+                    let drive = google.drive({
+                        version: 'v3',
+                        auth: oauth2Client
+                    });
+
+                    RED.nodes.addCredentials(nodeID, {
+                        drive: drive
+                    });
+
                     resp.send('<div>Authorized</div><script>close()</script>');
                 })
                 .catch(err => {

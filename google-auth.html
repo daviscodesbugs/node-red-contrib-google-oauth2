@@ -18,7 +18,7 @@
         function checkDelayed() {
             setTimeout(function() {
                 $.getJSON(`credentials/google-credentials/${node.id}`, function(creds) {
-                    if (creds.has_access_token && creds.has_refresh_token) {
+                    if (creds.has_drive) {
                         $("#node-config-dialog-ok").button("enable");
                         $("#client-info").hide();
                     } else {
