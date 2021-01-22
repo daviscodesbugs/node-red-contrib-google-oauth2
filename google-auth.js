@@ -8,7 +8,7 @@ module.exports = function(RED) {
     }
 
     RED.nodes.registerType(
-        "google-credentials",
+        "google-drive-credentials",
         GoogleNode,
         {
             credentials: {

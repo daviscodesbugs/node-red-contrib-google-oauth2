@@ -17,7 +17,7 @@
         // Keep checking
         function checkDelayed() {
             setTimeout(function() {
-                $.getJSON(`credentials/google-credentials/${node.id}`, function(creds) {
+                $.getJSON(`credentials/google-drive-credentials/${node.id}`, function(creds) {
                     if (creds.has_drive) {
                         $("#node-config-dialog-ok").button("enable");
                         $("#client-info").hide();
@@ -56,10 +56,10 @@
     }
 
     function label() {
-        return this.name || 'Google Drive';
+        return this.name || 'google drive credentials';
     }
 
-    RED.nodes.registerType('google-credentials', {
+    RED.nodes.registerType('google-drive-credentials', {
         category: 'config',
         exportable: false,
         defaults: {
@@ -75,7 +75,7 @@
 
 </script>
 
-<script type="text/html" data-template-name="google-credentials">
+<script type="text/html" data-template-name="google-drive-credentials">
     
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
