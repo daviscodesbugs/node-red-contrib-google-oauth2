@@ -33,7 +33,7 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("google", GoogleNode);
+    RED.nodes.registerType('google-drive', GoogleNode);
 
     RED.httpAdmin.get('/google/apis/drive/info', function(req, res) {
         discovery.apis.getRest({

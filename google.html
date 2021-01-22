@@ -21,10 +21,10 @@
     }
 
     function label() {
-        return this.name || "google";
+        return this.name || 'google drive';
     }
 
-    RED.nodes.registerType('google', {
+    RED.nodes.registerType('google-drive', {
         category: 'function',
         color: '#FFCC66',
         icon: 'google.png',
@@ -44,7 +44,7 @@
 
 </script>
 
-<script type="text/html" data-template-name="google">
+<script type="text/html" data-template-name="google-drive">
 
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
