@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedFunction, JSUnresolvedVariable -->
 <script type="text/javascript">
 
     function oneditprepare() {
@@ -16,12 +17,12 @@
 
             if (data.operations.indexOf(node.operation) < 0) {
                 $('#node-input-dynamic-operation').attr('selected', true);
-            };
+            }
         });
     }
 
     function label() {
-        return this.name || 'google drive';
+        return this.operation || 'google drive';
     }
 
     RED.nodes.registerType('google-drive', {
@@ -58,8 +59,7 @@
 
     <div class="form-row">
         <label for="node-input-operation"><i class="fa fa-wrench"></i> Operation</label>
-        <select id="node-input-operation" type="text" style="display: inline-block; vertical-align: top;">
-        </select>
+        <select id="node-input-operation" style="display: inline-block; vertical-align: top;"></select>
     </div>
 
 </script>
