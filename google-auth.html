@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
 <script type="text/javascript">
 
     function oneditprepare() {
@@ -9,9 +10,8 @@
             !this.credentials.has_refresh_token
         ) {
             console.log("No tokens set");
+            $("#client-info").css("visibility", "visible");
             $("#node-config-dialog-ok").button("disable");
-        } else {
-            $("#client-info").hide();
         }
 
         // Keep checking
@@ -29,24 +29,30 @@
         }
         checkDelayed();
 
-        $("#auth_button").click(function(e) {
-            var c_id = $("#node-config-input-client_id").val();
-            var c_secret = $("#node-config-input-client_secret").val();
+        let auth_button = $("#auth_button");
+
+        auth_button.click(function(e) {
+            let client_id = $("#node-config-input-client_id");
+            let client_secret = $("#node-config-input-client_secret");
+
+            let c_id = client_id.val();
             if (c_id === "") {
                 e.preventDefault();
-                $("#node-config-input-client_id").addClass("input-error");
+                client_id.addClass("input-error");
             }
+
+            let c_secret = client_secret.val();
             if (c_secret === "") {
                 e.preventDefault();
-                $("#node-config-input-client_secret").addClass("input-error");
+                client_secret.addClass("input-error");
             }
         });
 
-        $("#auth_button").mousedown(function() {
-            var c_id = $("#node-config-input-client_id").val();
-            var c_secret = $("#node-config-input-client_secret").val();
+        auth_button.mousedown(function() {
+            let c_id = $("#node-config-input-client_id").val();
+            let c_secret = $("#node-config-input-client_secret").val();
 
-            var url = "google-credentials/auth" + 
+            let url = "google-credentials/auth" +
                 `?id=${node.id}` +
                 `&clientID=${c_id}` +
                 `&clientSecret=${c_secret}`;
@@ -82,7 +88,7 @@
         <input id="node-config-input-name" type="text" placeholder="Name" />
     </div>
 
-    <div id="client-info">
+    <div id="client-info" style="visibility: hidden">
 
         <div class="form-row">
             <label for="node-config-input-client_id"><i class="fa fa-user"></i> Client ID</label>
